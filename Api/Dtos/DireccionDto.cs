@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Core.Entities
+namespace Api.Dtos
 {
-    public class Direccion : BaseEntity
+    public class DireccionDto
     {
         public string DetalleDireccion { get; set; }
         public int CiudadId { get; set; }
-        public Ciudad Ciudades { get; set; }
     }
 }
