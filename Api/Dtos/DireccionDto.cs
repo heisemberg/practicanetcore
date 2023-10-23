@@ -7,6 +7,7 @@ namespace Api.Dtos
 {
     public class DireccionDto
     {
+        public int Id { get; set; }
         public string DetalleDireccion { get; set; }
         public int CiudadId { get; set; }
     }
