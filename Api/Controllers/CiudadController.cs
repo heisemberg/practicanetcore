@@ -27,8 +27,8 @@ namespace Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IEnumerable<CiudadDto>>> Get()
         {
-            var nombreVariable = await _unitOfWork.Ciudades.GetAllAsync();
-            return _mapper.Map<List<CiudadDto>>(nombreVariable);
+            var ciudades = await _unitOfWork.Ciudades.GetAllAsync();
+            return _mapper.Map<List<CiudadDto>>(ciudades);
         }
 
         [HttpGet("{id}")]
@@ -37,14 +37,14 @@ namespace Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<CiudadDto>> Get(int id)
         {
-            var nombreVariable = await _unitOfWork.Ciudades.GetByIdAsync(id);
+            var ciudades = await _unitOfWork.Ciudades.GetByIdAsync(id);
 
-            if (nombreVariable == null)
+            if (ciudades == null)
             {
                 return NotFound();
             }
 
-            return _mapper.Map<CiudadDto>(nombreVariable);
+            return _mapper.Map<CiudadDto>(ciudades);
         }
 
         [HttpPost]
@@ -52,15 +52,15 @@ namespace Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Ciudad>> Post(CiudadDto CiudadDto)
         {
-            var nombreVariable = _mapper.Map<Ciudad>(CiudadDto);
-            this._unitOfWork.Ciudades.Add(nombreVariable);
+            var ciudades = _mapper.Map<Ciudad>(CiudadDto);
+            this._unitOfWork.Ciudades.Add(ciudades);
             await _unitOfWork.SaveAsync();
 
-            if (nombreVariable == null)
+            if (ciudades == null)
             {
                 return BadRequest();
             }
-            CiudadDto.Id = nombreVariable.Id;
+            CiudadDto.Id = ciudades.Id;
             return CreatedAtAction(nameof(Post), new { id = CiudadDto.Id }, CiudadDto);
         }
 
@@ -85,8 +85,8 @@ namespace Api.Controllers
                 return NotFound();
             }
 
-            var nombreVariable = _mapper.Map<Ciudad>(CiudadDto);
-            _unitOfWork.Ciudades.Update(nombreVariable);
+            var ciudades = _mapper.Map<Ciudad>(CiudadDto);
+            _unitOfWork.Ciudades.Update(ciudades);
             await _unitOfWork.SaveAsync();
             return CiudadDto;
         }
@@ -96,14 +96,14 @@ namespace Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(int id)
         {
-            var nombreVariable = await _unitOfWork.Ciudades.GetByIdAsync(id);
+            var ciudades = await _unitOfWork.Ciudades.GetByIdAsync(id);
 
-            if (nombreVariable == null)
+            if (ciudades == null)
             {
                 return NotFound();
             }
 
-            _unitOfWork.Ciudades.Remove(nombreVariable);
+            _unitOfWork.Ciudades.Remove(ciudades);
             await _unitOfWork.SaveAsync();
             return NoContent();
         }
